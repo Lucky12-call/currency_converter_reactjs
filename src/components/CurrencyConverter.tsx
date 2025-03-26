@@ -22,7 +22,6 @@ const CurrencyConverter: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<string>("");
   const [topCurrencies, setTopCurrencies] = useState<CurrencyRate[]>([]);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   // List of popular currencies
   const currencies: string[] = [
@@ -51,17 +50,6 @@ const CurrencyConverter: React.FC = () => {
     "MYR",
     "THB",
   ];
-
-  // Check if mobile view
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   // Fetch exchange rates
   const fetchExchangeRate = async (): Promise<void> => {
@@ -149,25 +137,11 @@ const CurrencyConverter: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
-      {/* Mobile Ads Banner (top) */}
-      {isMobile && (
-        <div className="bg-gray-200 p-2 text-center text-sm">
-          Mobile Ad Banner
-        </div>
-      )}
-
       <div className="container mx-auto px-4 py-8">
-        {/* Desktop Ads (left side) */}
-        {!isMobile && (
-          <div className="fixed left-0 top-0 h-full w-32 bg-gray-200 items-center justify-center hidden lg:flex">
-            <div className="rotate-90 whitespace-nowrap">Desktop Ad Banner</div>
-          </div>
-        )}
-
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-6 md:mb-10">
-            <h1 className="text-2xl md:text-4xl font-bold text-dark mb-2">
-              Currency Converter
+          <div className="text-center mb-6 bg-white rounded-2xl p-4 md:p-6">
+            <h1 className="text-2xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-800 to-blue-800 mb-2">
+              Currency FX
             </h1>
             <p className="text-sm md:text-lg text-gray-600">
               Real-time exchange rates
@@ -180,7 +154,7 @@ const CurrencyConverter: React.FC = () => {
               <div className="p-4 sm:p-6 md:p-8">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 md:mb-6">
                   <h2 className="text-xl md:text-2xl font-semibold text-dark mb-2 sm:mb-0">
-                    Currency Conversion
+                    Currency FX
                   </h2>
                   <div className="flex items-center text-xs md:text-sm text-gray-500">
                     <FiRefreshCw className="mr-1" />
@@ -363,25 +337,11 @@ const CurrencyConverter: React.FC = () => {
             </div>
           </div>
 
-          <div className="mt-6 md:mt-12 text-center text-xs md:text-sm text-gray-500">
+          <div className="mt-6 text-center text-xs md:text-sm text-gray-500">
             <p>Exchange rates are for demonstration purposes only.</p>
           </div>
         </div>
-
-        {/* Desktop Ads (right side) */}
-        {!isMobile && (
-          <div className="fixed right-0 top-0 h-full w-32 bg-gray-200 items-center justify-center hidden lg:flex">
-            <div className="rotate-90 whitespace-nowrap">Desktop Ad Banner</div>
-          </div>
-        )}
       </div>
-
-      {/* Mobile Ads Banner (bottom) */}
-      {isMobile && (
-        <div className="bg-gray-200 p-2 text-center text-sm">
-          Mobile Ad Banner
-        </div>
-      )}
     </div>
   );
 };
